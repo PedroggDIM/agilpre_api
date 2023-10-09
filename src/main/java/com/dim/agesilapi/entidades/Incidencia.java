@@ -50,6 +50,18 @@ public class Incidencia {
 	@JoinColumn(name="ReceptorId")
 	Receptor receptor;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="UnidadId")
+	Unidad unidad;
+	
+	public Unidad getUnidad() {
+		return unidad;
+	}
+
+	public void setUnidad(Unidad unidad) {
+		this.unidad = unidad;
+	}
+	
 	public Categoria getCategoria() {
 		return null;
 	}
