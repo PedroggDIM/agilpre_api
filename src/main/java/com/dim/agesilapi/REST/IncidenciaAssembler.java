@@ -2,29 +2,34 @@ package com.dim.agesilapi.REST;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-import org.springframework.hateoas.server.RepresentationModelAssembler;
-import org.springframework.stereotype.Component;
-import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.Link;
 
-import java.util.ArrayList;
-import java.util.Date;
-import org.springframework.hateoas.EntityModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
+
 import com.dim.agesilapi.entidades.CambiosDependencia;
 import com.dim.agesilapi.entidades.DeficienciaServicio;
 import com.dim.agesilapi.entidades.Incidencia;
 import com.dim.agesilapi.entidades.Incidencia.Categoria;
 import com.dim.agesilapi.entidades.LimpiezaChoque;
-import com.dim.agesilapi.entidades.Usuario;
+import com.dim.agesilapi.entidades.Unidad;
+import com.dim.agesilapi.repositorios.UnidadRepositorio;
 
 @Component
 public class IncidenciaAssembler implements RepresentationModelAssembler<Incidencia, IncidenciaModel>{
 
+	@Autowired
+	private UnidadRepositorio unidadRepositorio;
+	
 	@Override
 	public IncidenciaModel toModel(Incidencia entity) {
 		IncidenciaModel model = new IncidenciaModel();
+		
+		Unidad unidad = entity.getUnidad();
+		if(unidad != null) {
+			model.setZona(unidad.getZona());
+			model.setUnidad(unidad.getNombre());
+		}
 		
 		model.setId(entity.getId());
 		model.setFechaInicio(entity.getFechaInicio());
@@ -55,7 +60,9 @@ public class IncidenciaAssembler implements RepresentationModelAssembler<Inciden
 	}
 	public Incidencia toEntity(IncidenciaPostModel model) {
 
+		Unidad unidad = unidadRepositorio.findByNombreAndZona(model.getUnidad(), model.getZona());
 		Incidencia incidencia = new Incidencia();
+		incidencia.setUnidad(unidad);
 		
 		if (model.getCategoria() ==  Categoria.DeficienciaServicio) {
 			DeficienciaServicio def = new DeficienciaServicio();

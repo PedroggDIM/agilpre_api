@@ -1,5 +1,4 @@
 package com.dim.agesilapi.REST;
-
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -32,6 +31,9 @@ public class IncidenciaPostModel extends RepresentationModel<IncidenciaPostModel
 	private double metrosCuadrados;
 	private Usuario usuario;
 	private Receptor receptor;
+	private String zona;
+	private String unidad;
+	
 	public Date getFechaInicio() {
 		return fechaInicio;
 	}
@@ -81,6 +83,17 @@ public class IncidenciaPostModel extends RepresentationModel<IncidenciaPostModel
 		return receptor;
 	}
 	
-	
+	public String getZona() {
+		return zona;
+	}
+	public void setZona(String zona) {
+		this.zona = zona;
+	}
+	public String getUnidad() {
+		return unidad;
+	}
+	public void setUnidad(String unidad) {
+		this.unidad = unidad;
+	}
 	
 }

@@ -1,5 +1,4 @@
 package com.dim.agesilapi.entidades;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -7,17 +6,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import net.minidev.json.annotate.JsonIgnore;
-
-import java.util.List;
-
-import com.dim.agesilapi.entidades.Incidencia;
 
 @Entity
 @Table(name="USUARIOS")
 public class Usuario {
+	
+	public static final String CORREO = "correo";
+	public static final String CONTRASENIA = "contrasenia";
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

@@ -1,8 +1,5 @@
 package com.dim.agesilapi.REST;
-import org.slf4j.Logger;
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.Link;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,15 +8,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import com.dim.agesilapi.AgesilapiApplication;
+
+import com.dim.agesilapi.dto.DataSession;
 import com.dim.agesilapi.entidades.CambiosDependencia;
 import com.dim.agesilapi.entidades.DeficienciaServicio;
 import com.dim.agesilapi.entidades.Incidencia;
 import com.dim.agesilapi.entidades.Incidencia.Categoria;
 import com.dim.agesilapi.entidades.LimpiezaChoque;
+import com.dim.agesilapi.entidades.Unidad;
 import com.dim.agesilapi.repositorios.IncidenciaRepositorio;
+import com.dim.agesilapi.repositorios.UnidadRepositorio;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -27,13 +26,16 @@ import com.dim.agesilapi.repositorios.IncidenciaRepositorio;
 public class IncidenciaController {
 	private final IncidenciaRepositorio incRepositorio;
 	private final IncidenciaRepositorio repositorio;
+	private final UnidadRepositorio unidadRepositorio;
+	
 	private IncidenciaAssembler assembler = new IncidenciaAssembler();	
 	//private final Logger log;
 
 	IncidenciaController(IncidenciaRepositorio incRepositorio, IncidenciaRepositorio repositorio,
-			IncidenciaAssembler assemble) {
+			UnidadRepositorio unidadRepositorio, IncidenciaAssembler assembler) {
 		this.incRepositorio = incRepositorio;
 		this.repositorio = repositorio;
+		this.unidadRepositorio = unidadRepositorio;
 		this.assembler = assembler;
 		//this.log = AgesilapiApplication.log;
 
@@ -46,9 +48,17 @@ public class IncidenciaController {
 		return assembler.toModel(incidencia);
 	}
 
-	@GetMapping
-	public CollectionModel<IncidenciaModel> all() {
-		return assembler.toCollectionModel(repositorio.findAll());
+	@PostMapping("all")
+	public CollectionModel<IncidenciaModel> all(@RequestBody DataSession dataSession) {
+		CollectionModel<IncidenciaModel> col;
+		if(dataSession.getPerfil().equals("Administrador")) {
+			col = assembler.toCollectionModel(repositorio.findAll());
+		}else {
+			Unidad unidad = unidadRepositorio.findByNombre(dataSession.getUnidad());
+			col = assembler.toCollectionModel(repositorio.findByUnidad(unidad));
+		}
+		
+		return col; 
 	}
 
 	@PostMapping

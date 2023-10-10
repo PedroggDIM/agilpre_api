@@ -1,5 +1,4 @@
 package com.dim.agesilapi.REST;
-
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -29,6 +28,8 @@ public class IncidenciaModel extends RepresentationModel<IncidenciaModel>{
 	private String tipoCambio;
 	private String tipoDependencia;
 	private double metrosCuadrados;
+	private String zona;
+	private String unidad;
 	
 	//Getters y Setters
 	public Long getId() {
@@ -120,5 +121,17 @@ public class IncidenciaModel extends RepresentationModel<IncidenciaModel>{
 	}
 	public void setMetrosCuadrados(double metrosCuadrados) {
 		this.metrosCuadrados = metrosCuadrados;
+	}
+	public String getZona() {
+		return zona;
+	}
+	public void setZona(String zona) {
+		this.zona = zona;
+	}
+	public String getUnidad() {
+		return unidad;
+	}
+	public void setUnidad(String unidad) {
+		this.unidad = unidad;
 	}
 }

@@ -1,20 +1,11 @@
 package com.dim.agesilapi.REST;
 
-import java.util.Optional;
-
-import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dim.agesilapi.entidades.Usuario;
@@ -39,8 +30,8 @@ public class LoginController {
 
 	@PostMapping
 	public ResponseEntity<String> login(@RequestBody LoginModel model) {
-	    Usuario usuario = repositorio.findByCorreoAndContrasenia(model.getCorreo(), model.getContrasenia());
 		
+		  Usuario usuario = repositorio.findByCorreoAndContrasenia(model.getCorreo(), model.getContrasenia());
 	    
 	    if (usuario != null) {
 	        UsuarioRol perfil = usuario.getUsuarioRol();
@@ -48,9 +39,10 @@ public class LoginController {
 	        String unidad = usuario.getUnidad().getNombre();
 	        
 	        JSONObject responseJson = new JSONObject();
-	        responseJson.put("perfil", perfil);
+	        responseJson.put("perfil", perfil.name());
 	        responseJson.put("zona", zona);
 	        responseJson.put("unidad", unidad);
+	        responseJson.put("correo", usuario.getCorreo());
 	        
 	        return ResponseEntity.ok(responseJson.toString());
 	    } else {
