@@ -1,4 +1,11 @@
 package com.dim.agesilapi.REST;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Locale;
+
+import org.springframework.data.repository.query.Param;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -8,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dim.agesilapi.dto.DataSession;
@@ -19,6 +27,7 @@ import com.dim.agesilapi.entidades.LimpiezaChoque;
 import com.dim.agesilapi.entidades.Unidad;
 import com.dim.agesilapi.repositorios.IncidenciaRepositorio;
 import com.dim.agesilapi.repositorios.UnidadRepositorio;
+import com.dim.agesilapi.REST.EstadisticasModel;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -37,8 +46,6 @@ public class IncidenciaController {
 		this.repositorio = repositorio;
 		this.unidadRepositorio = unidadRepositorio;
 		this.assembler = assembler;
-		//this.log = AgesilapiApplication.log;
-
 	}
 
 	@GetMapping("{id}")
@@ -70,8 +77,7 @@ public class IncidenciaController {
 
 	@PutMapping("{id}")
 	public IncidenciaModel edit(@PathVariable Long id, @RequestBody IncidenciaModel model) {
-	    Incidencia incidencia = repositorio.findById(id).map(pre -> {
-	        
+	    Incidencia incidencia = repositorio.findById(id).map(pre -> {	        
 	        pre.setFechaInicio(model.getFechaInicio());
 	        pre.setFechaFin(model.getFechaFin());
 	        pre.setNumDias(model.getNumDias());
@@ -97,14 +103,23 @@ public class IncidenciaController {
 		.orElseThrow(() -> new RegisterNotFoundException(id, "incidencia"));
 	//	log.info("Actualizado " + incidencia);
 		return assembler.toModel(incidencia);
-	}
-	
+	}	
 	
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable Long id) {
 		//log.info("Borrada incidencia " + id);
 		repositorio.deleteById(id);
-
+	}	
+	
+	@GetMapping("/obtenerNumeroIncidencias")
+	public EstadisticasModel obtenerNumeroIncidencias(@RequestParam("estado") String estado,
+	     	@RequestParam("fechaInicio") LocalDate fechaInicio,
+			@RequestParam("fechaFin") LocalDate fechaFin
+			) {	
+		int numIncidencias = repositorio.obtenerNumeroDeIncidencias(estado, fechaInicio, fechaFin);
+		EstadisticasModel estadisticasModel = new EstadisticasModel();
+		estadisticasModel.setNumIncidencias(numIncidencias);
+		return estadisticasModel;
 	}
 
 }
