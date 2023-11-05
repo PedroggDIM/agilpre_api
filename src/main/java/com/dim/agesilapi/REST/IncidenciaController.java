@@ -108,15 +108,16 @@ public class IncidenciaController {
 	}	
 	
 	@DeleteMapping("{id}")
-	public RedirectView delete(@PathVariable Long id) {
+	// public RedirectView delete(@PathVariable Long id) {
+		public void delete(@PathVariable Long id) {
 		//log.info("Borrada incidencia " + id);
 	//	repositorio.deleteById(id);
 		repositorio.deleteById(id);
 	    
 	    // Redirige a la misma página o a la página deseada después de borrar la incidencia
 	    // En este ejemplo, redirige al inicio de la aplicación.
-	    String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
-	    return new RedirectView(baseUrl + "/");
+	  //  String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
+	  //  return new RedirectView(baseUrl + "/");
 	}	
 	
 	@GetMapping("/obtenerNumeroIncidencias")
