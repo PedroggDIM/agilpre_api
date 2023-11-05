@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.dim.agesilapi.dto.DataSession;
 import com.dim.agesilapi.entidades.CambiosDependencia;
@@ -106,9 +108,15 @@ public class IncidenciaController {
 	}	
 	
 	@DeleteMapping("{id}")
-	public void delete(@PathVariable Long id) {
+	public RedirectView delete(@PathVariable Long id) {
 		//log.info("Borrada incidencia " + id);
+	//	repositorio.deleteById(id);
 		repositorio.deleteById(id);
+	    
+	    // Redirige a la misma página o a la página deseada después de borrar la incidencia
+	    // En este ejemplo, redirige al inicio de la aplicación.
+	    String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
+	    return new RedirectView(baseUrl + "/");
 	}	
 	
 	@GetMapping("/obtenerNumeroIncidencias")
