@@ -32,6 +32,7 @@ public class IncidenciaAssembler implements RepresentationModelAssembler<Inciden
 		}
 
 		model.setId(entity.getId());
+		model.setNumero(entity.getNumero());
 		model.setFechaInicio(entity.getFechaInicio());
 		model.setFechaFin(entity.getFechaFin());
 		model.setNumDias(entity.getNumDias());
@@ -83,6 +84,7 @@ public class IncidenciaAssembler implements RepresentationModelAssembler<Inciden
 		}
 
 		incidencia.setUnidad(unidad);
+		incidencia.setNumero(model.getNumero());
 		incidencia.setFechaInicio(model.getFechaInicio());
 		incidencia.setFechaFin(model.getFechaFin());
 		incidencia.setNumDias(model.getNumDias());

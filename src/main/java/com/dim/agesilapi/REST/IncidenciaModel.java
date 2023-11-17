@@ -10,7 +10,8 @@ import com.dim.agesilapi.entidades.Incidencia.Categoria;
 @Relation(itemRelation="incidencia")
 public class IncidenciaModel extends RepresentationModel<IncidenciaModel>{
 
-	private Long id;	
+	private Long id;
+	private int numero;
 	private Date fechaInicio;
 	private Date fechaFin;
 	private int numDias;
@@ -37,6 +38,12 @@ public class IncidenciaModel extends RepresentationModel<IncidenciaModel>{
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}	
+	public int getNumero() {
+		return numero;
+	}
+	public void setNumero(int numero) {
+		this.numero = numero;
 	}
 	public Date getFechaInicio() {
 		return fechaInicio;
