@@ -28,10 +28,7 @@ public class Incidencia {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
-	// Cambios en la anotación para permitir la generación automática
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int numero;
+	private Long id;	
 	private Date fechaInicio;
 	private Date fechaFin;
 	private int numDias;
@@ -70,16 +67,8 @@ public class Incidencia {
 	}
 	public Categoria setCategoria() {		
 		return null;
-	}	
+	}
 	
-	public int getNumero() {
-		return numero;
-	}
-
-	public void setNumero(int numero) {
-		this.numero = numero;
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -140,13 +129,14 @@ public class Incidencia {
 	public void setReceptor(Receptor receptor) {
 		this.receptor = receptor;
 	}
-
 	@Override
 	public String toString() {
-		return "Incidencia [id=" + id + ", numero=" + numero + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin
-				+ ", numDias=" + numDias + ", estado=" + estado + ", comunicaEmpresa=" + comunicaEmpresa
-				+ ", infoAdicio_grabador=" + infoAdicio_grabador + ", descripcion=" + descripcion + ", usuario="
-				+ usuario + ", receptor=" + receptor + ", unidad=" + unidad + "]";
-	}	
+		return "Incidencia [id=" + id + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", numDias="
+				+ numDias + ", estado=" + estado + ", comunicaEmpresa=" + comunicaEmpresa + ", infoAdicio_grabador="
+				+ infoAdicio_grabador + ", descripcion=" + descripcion + ", usuario=" + usuario + ", receptor="
+				+ receptor + "]";
+	}
+
+	
 	
 }

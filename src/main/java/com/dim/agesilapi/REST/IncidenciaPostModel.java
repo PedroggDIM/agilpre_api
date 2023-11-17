@@ -12,7 +12,6 @@ import com.dim.agesilapi.entidades.Usuario;
 @Relation(itemRelation="incidencia")
 public class IncidenciaPostModel extends RepresentationModel<IncidenciaPostModel>{
 
-	private int numero;
 	private Date fechaInicio;
 	private Date fechaFin;
 	private int numDias;
@@ -35,10 +34,6 @@ public class IncidenciaPostModel extends RepresentationModel<IncidenciaPostModel
 	private String zona;
 	private String unidad;
 	
-	
-	public int getNumero() {
-		return numero;
-	}
 	public Date getFechaInicio() {
 		return fechaInicio;
 	}
